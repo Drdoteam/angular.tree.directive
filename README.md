@@ -1,9 +1,9 @@
 
 # To Do
- - Custom HTML Template
+ - Custom Style
  - Custom Icon
  - Event Without $watch
- - Collapsible or not
+ - Set collapsibility
 
 Angular Treeview
 ================
