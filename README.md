@@ -1,3 +1,10 @@
+
+# To Do
+ - Custom HTML Template
+ - Custom Icon
+ - Event Without $watch
+ - Collapsible or not
+
 Angular Treeview
 ================
 
