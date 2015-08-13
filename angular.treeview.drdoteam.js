@@ -31,7 +31,7 @@
 			link: function ( scope, element, attrs ) {
 				//tree id
 				var treeId = attrs.treeId;
-			
+
 				//tree model
 				var treeModel = attrs.treeModel;
 
@@ -44,33 +44,48 @@
 				//children
 				var nodeChildren = attrs.nodeChildren || 'children';
 
+				var collapsibility = true;
+				if (attrs.collapsibility && attrs.collapsibility === 'false') {
+					collapsibility = false;
+				}
+
+				var icon = true;
+				if (attrs.icon && attrs.icon === 'false') {
+					icon = false;
+				}
+
 				//tree template
 				var template =
 					'<ul>' +
 						'<li data-ng-repeat="node in ' + treeModel + '">' +
-							'<i class="collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="normal" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
+							'<i class="collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed && ' + treeId + '.icon" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed  && ' + treeId + '.icon" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="normal" data-ng-hide="node.' + nodeChildren + '.length  && ' + treeId + '.icon"></i> ' +
 							'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
 							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId + ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + '></div>' +
 						'</li>' +
 					'</ul>';
-
 
 				//check tree id, tree model
 				if( treeId && treeModel ) {
 
 					//root node
 					if( attrs.angularTreeview ) {
-					
+
 						//create tree object if not exists
 						scope[treeId] = scope[treeId] || {};
+
+						scope[treeId].collapsibility = collapsibility;
+
+						scope[treeId].icon = icon;
 
 						//if node head clicks,
 						scope[treeId].selectNodeHead = scope[treeId].selectNodeHead || function( selectedNode ){
 
 							//Collapse or Expand
-							selectedNode.collapsed = !selectedNode.collapsed;
+							if (scope[treeId].collapsibility) {
+								selectedNode.collapsed = !selectedNode.collapsed;
+							}
 						};
 
 						//if node label clicks,
