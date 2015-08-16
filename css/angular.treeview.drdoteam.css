@@ -16,7 +16,7 @@ div[data-angular-treeview] {
 div[data-tree-model] ul {
   margin: 0;
   padding: 0;
-  list-style: none; 
+  list-style: none;
   border: none;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@ div[data-tree-model] ul {
 div[data-tree-model] li {
   position: relative;
   padding: 0 0 0 20px;
-  line-height: 20px;
+  line-height: 35px;
 }
 
 div[data-tree-model] li .expanded {

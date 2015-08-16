@@ -22,18 +22,22 @@
           data-tree-model="treeCollapsible"
           data-node-id="id"
           data-node-label="label"
-          data-node-children="children">
-        </div><!-- collapsibility. default. true -->
-      </div><!--col -->
-      <div class="col-lg-6">
-        <div
-          data-angular-treeview="true"
-          data-tree-id="treeUncollapsible"
-          data-tree-model="treeUncollapsible"
-          data-node-id="id"
-          data-node-label="label"
           data-node-children="children"
-          data-collapsibility="false">
+          data-collapsibility="true"
+          data-extra-template-head-node-model="<span data-ng-show='node.children.length' data-ng-click='treeCollapsible.selectNodeLabel(node)'>{{node.label}}<button class='btn btn-default btn-sm'>Modify</button></span>"
+          data-extra-template-node-model="<i>leaf</i>">
+          <root>
+            <i class="collapsed" data-ng-show="node.children.length && node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+            <i class="expanded" data-ng-show="node.children.length && !node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+            <i class="normal" data-ng-hide="node.children.length"></i>
+            <span data-ng-class="node.selected" data-ng-click="treeCollapsible.selectNodeLabel(node)">{{node.label}} / root</span>
+          </root>
+          <node>
+            <i class="collapsed" data-ng-show="node.children.length && node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+            <i class="expanded" data-ng-show="node.children.length && !node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+            <i class="normal" data-ng-hide="node.children.length"></i>
+            <span data-ng-class="node.selected" data-ng-click="treeCollapsible.selectNodeLabel(node)">{{node.label}} / node</span>
+          </node>
         </div>
       </div><!--col -->
     </div><!--row -->
@@ -72,35 +76,6 @@
                 children: []
               }]
             }]
-          },{
-            id: 'id-032',
-            label: 'label-032',
-            children: []
-          },{
-            id: 'id-033',
-            label: 'label-033',
-            children: []
-          }]
-        }];
-        $scope.treeUncollapsible = [{
-          id: 'id-01',
-          label: 'label-01',
-          children: [{
-            id: 'id-011',
-            label: 'label-011',
-            children: []
-          }]
-        },{
-          id: 'id-02',
-          label: 'label-02',
-          children: []
-        },{
-          id: 'id-03',
-          label: 'label-03',
-          children: [{
-            id: 'id-031',
-            label: 'label-031',
-            children: []
           },{
             id: 'id-032',
             label: 'label-032',

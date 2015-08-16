@@ -49,23 +49,6 @@
 					collapsibility = false;
 				}
 
-				var icon = true;
-				if (attrs.icon && attrs.icon === 'false') {
-					icon = false;
-				}
-
-				//tree template
-				var template =
-					'<ul>' +
-						'<li data-ng-repeat="node in ' + treeModel + '">' +
-							'<i class="collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed && ' + treeId + '.icon" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed  && ' + treeId + '.icon" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="normal" data-ng-hide="node.' + nodeChildren + '.length  && ' + treeId + '.icon"></i> ' +
-							'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
-							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId + ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + '></div>' +
-						'</li>' +
-					'</ul>';
-
 				//check tree id, tree model
 				if( treeId && treeModel ) {
 
@@ -77,12 +60,11 @@
 
 						scope[treeId].collapsibility = collapsibility;
 
-						scope[treeId].icon = icon;
-
 						//if node head clicks,
 						scope[treeId].selectNodeHead = scope[treeId].selectNodeHead || function( selectedNode ){
 
 							//Collapse or Expand
+							console.log(scope[treeId].collapsibility);
 							if (scope[treeId].collapsibility) {
 								selectedNode.collapsed = !selectedNode.collapsed;
 							}
@@ -103,6 +85,49 @@
 							scope[treeId].currentNode = selectedNode;
 						};
 					}
+
+					//tree template
+					var defaultNodeTemplate = '<i class="collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+						'<i class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+						'<i class="normal" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
+						'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>';
+					var template =
+						'<ul>' +
+							'<li data-ng-repeat="node in ' + treeModel + '">';
+					//root node
+					console.log(element.find("root"));
+					console.log(element.find("node"));
+					var rootElement = element.find("root")[0];
+					var rootNodeTemplate = rootElement ? rootElement.innerHTML.trim().replace(/\n/g, "") : undefined;
+					var nodeElement = element.find("node")[0];
+					var nodeTemplate = nodeElement ? nodeElement.innerHTML.trim().replace(/\n/g, "") : undefined;
+					if( attrs.angularTreeview ) {
+						if (rootNodeTemplate) {
+							template += rootNodeTemplate;
+						} else {
+							template += defaultNodeTemplate;
+						}
+					} else {
+						if (nodeTemplate) {
+							template += nodeTemplate;
+						} else {
+							template += defaultNodeTemplate;
+						}
+					}
+					template += '<div data-ng-hide="node.collapsed" data-tree-id="' + treeId +
+									'" data-tree-model="node.' + nodeChildren +
+									'" data-node-id=' + nodeId +
+									' data-node-label=' + nodeLabel +
+									' data-node-children=' + nodeChildren + '>';
+					if (rootNodeTemplate) {
+						template += '<root>' + rootNodeTemplate + '</root>';
+					}
+					if (nodeTemplate) {
+						template += '<node>' + nodeTemplate + '</node>';
+					}
+					template += '</div>' +
+							'</li>' +
+						'</ul>';
 
 					//Rendering template.
 					element.html('').append( $compile( template )( scope ) );
