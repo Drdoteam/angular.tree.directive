@@ -11,34 +11,56 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.min.js"></script>
   <script src="../angular.tree.directive.js"></script>
+  <style>
+    div[data-tree-model] li {
+      line-height: 35px;
+    }
+
+    div[data-tree-model] li .btn-node {
+      background-color: white;
+    }
+
+    div[data-tree-model] li .selected {
+      background-color: #CFCFCF;
+    }
+  </style>
 </head>
 <body ng-app="myApp">
   <div ng-controller="myController">
     <div class="row">
       <div class="col-lg-6">
-        <div
-          data-angular-treeview="true"
-          data-tree-id="treeCollapsible"
-          data-tree-model="treeCollapsible"
-          data-node-id="id"
-          data-node-label="label"
-          data-node-children="children"
-          data-collapsibility="true"
-          data-extra-template-head-node-model="<span data-ng-show='node.children.length' data-ng-click='treeCollapsible.selectNodeLabel(node)'>{{node.label}}<button class='btn btn-default btn-sm'>Modify</button></span>"
-          data-extra-template-node-model="<i>leaf</i>">
-          <root>
-            <i class="collapsed" data-ng-show="node.children.length && node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
-            <i class="expanded" data-ng-show="node.children.length && !node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
-            <i class="normal" data-ng-hide="node.children.length"></i>
-            <span data-ng-class="node.selected" data-ng-click="treeCollapsible.selectNodeLabel(node)">{{node.label}} / root</span>
-          </root>
-          <node>
-            <i class="collapsed" data-ng-show="node.children.length && node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
-            <i class="expanded" data-ng-show="node.children.length && !node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
-            <i class="normal" data-ng-hide="node.children.length"></i>
-            <span data-ng-class="node.selected" data-ng-click="treeCollapsible.selectNodeLabel(node)">{{node.label}} / node</span>
-          </node>
-        </div>
+          <div
+            data-angular-treeview="true"
+            data-tree-id="treeCollapsible"
+            data-tree-model="treeCollapsible"
+            data-node-id="id"
+            data-node-label="label"
+            data-node-children="children"
+            data-collapsibility="true">
+            <root>
+              <i class="collapsed" data-ng-show="node.children.length && node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+              <i class="expanded" data-ng-show="node.children.length && !node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+              <i class="normal" data-ng-hide="node.children.length"></i>
+              <span data-ng-click="treeCollapsible.selectNodeLabel(node)">
+                <button class="btn btn-sm btn-node" data-ng-class="node.selected" >{{node.label}} / root</button>
+              </span>
+              <span ng-show="node.selected">
+                <button class="btn btn-sm btn-default">Modify</button>
+                <button class="btn btn-sm btn-danger">Remove</button>
+              </span>
+            </root>
+            <node>
+              <i class="collapsed" data-ng-show="node.children.length && node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+              <i class="expanded" data-ng-show="node.children.length && !node.collapsed" data-ng-click="treeCollapsible.selectNodeHead(node)"></i>
+              <i class="normal" data-ng-hide="node.children.length"></i>
+              <span data-ng-click="treeCollapsible.selectNodeLabel(node)">
+                <button class="btn btn-sm btn-node" data-ng-class="node.selected" >{{node.label}} / node</button>
+              </span>
+              <span ng-show="node.selected">
+                <button class="btn btn-sm btn-danger">Remove</button>
+              </span>
+            </node>
+          </div><!-- tree -->
       </div><!--col -->
     </div><!--row -->
   </div>

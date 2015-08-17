@@ -95,8 +95,6 @@
 						'<ul>' +
 							'<li data-ng-repeat="node in ' + treeModel + '">';
 					//root node
-					console.log(element.find("root"));
-					console.log(element.find("node"));
 					var rootElement = element.find("root")[0];
 					var rootNodeTemplate = rootElement ? rootElement.innerHTML.trim().replace(/\n/g, "") : undefined;
 					var nodeElement = element.find("node")[0];
