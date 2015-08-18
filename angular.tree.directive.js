@@ -44,9 +44,18 @@
 				//children
 				var nodeChildren = attrs.nodeChildren || 'children';
 
+				var treeClass = attrs.treeClass || undefined;
+
+				var nodeClass = attrs.nodeClass || undefined;
+
 				var collapsibility = true;
 				if (attrs.collapsibility && attrs.collapsibility === 'false') {
 					collapsibility = false;
+				}
+
+				var selectability = true;
+				if (attrs.selectability && attrs.selectability === 'false') {
+					selectability = false;
 				}
 
 				//check tree id, tree model
@@ -60,11 +69,16 @@
 
 						scope[treeId].collapsibility = collapsibility;
 
+						scope[treeId].selectability = selectability;
+
+						scope[treeId].treeClass = treeClass;
+
+						scope[treeId].nodeClass = nodeClass;
+
 						//if node head clicks,
 						scope[treeId].selectNodeHead = scope[treeId].selectNodeHead || function( selectedNode ){
 
 							//Collapse or Expand
-							console.log(scope[treeId].collapsibility);
 							if (scope[treeId].collapsibility) {
 								selectedNode.collapsed = !selectedNode.collapsed;
 							}
@@ -72,6 +86,9 @@
 
 						//if node label clicks,
 						scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function( selectedNode ){
+							if (scope[treeId].selectability === false) {
+								return;
+							}
 
 							//remove highlight from previous node
 							if( scope[treeId].currentNode && scope[treeId].currentNode.selected ) {
@@ -91,9 +108,18 @@
 						'<i class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
 						'<i class="normal" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
 						'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>';
-					var template =
-						'<ul>' +
-							'<li data-ng-repeat="node in ' + treeModel + '">';
+
+					var template;
+					if (scope[treeId].treeClass) {
+						template = '<ul class="' + treeClass + '">';
+					} else {
+						template = '<ul>';
+					}
+					if (scope[treeId].nodeClass) {
+						template += '<li class="' + nodeClass + '" data-ng-repeat="node in ' + treeModel + '">';
+					} else {
+						template += '<li data-ng-repeat="node in ' + treeModel + '">';
+					}
 					//root node
 					var rootElement = element.find("root")[0];
 					var rootNodeTemplate = rootElement ? rootElement.innerHTML.trim().replace(/\n/g, "") : undefined;
@@ -102,6 +128,8 @@
 					if( attrs.angularTreeview ) {
 						if (rootNodeTemplate) {
 							template += rootNodeTemplate;
+						} else if (nodeTemplate) {
+							template += nodeTemplate;
 						} else {
 							template += defaultNodeTemplate;
 						}
@@ -119,6 +147,8 @@
 									' data-node-children=' + nodeChildren + '>';
 					if (rootNodeTemplate) {
 						template += '<root>' + rootNodeTemplate + '</root>';
+					} else if (nodeTemplate) {
+						template += '<root>' + nodeTemplate + '</root>';
 					}
 					if (nodeTemplate) {
 						template += '<node>' + nodeTemplate + '</node>';
