@@ -25,7 +25,6 @@ So, I add new features to this repository.
 ## 2. Minify
 ## 3. Bower
 ## 4. One(Radio) or Multiple(Checkbox) Select
-## 5. In place editing
 
 # License
 
