@@ -7,7 +7,7 @@
 
  - Collapsibility
  - Selectability
- - Tree(<ul>), Node(<li>) Custom Class
+ - Tree(\<ul\>), Node(\<li\>) Custom Class
  - Custom HTML Template
 
 ## Collapsibility
