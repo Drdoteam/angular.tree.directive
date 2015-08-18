@@ -23,7 +23,7 @@ So, I add new features to this repository.
 
 The MIT License.
 
-Copyright ⓒ 2013 AHN JAE-HA.
+Copyright ⓒ 2013 AHN JAE-HA.   
 Copyright ⓒ 2015 Jinho Shin.
 
 See [LICENSE](https://github.com/Drdoteam/angular.tree.directive/blob/master/LICENSE)
