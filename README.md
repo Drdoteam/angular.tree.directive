@@ -1,7 +1,8 @@
 # AngularJS Tree Directive
 
-# From
- -  https://github.com/eu81273/angular.treeview
+'angular.tree.directive' is forked from 'https://github.com/eu81273/angular.treeview'.  
+'eu81273/angular.treeview' is stopped Oct, 2013.  
+So, I add new features to this repository.
 
 # Additional Features
 
